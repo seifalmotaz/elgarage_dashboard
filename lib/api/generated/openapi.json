@@ -1,0 +1,6313 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/v1": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "409": {
+            "description": "Phone number already registered"
+          }
+        },
+        "summary": "Register a new user",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "401": {
+            "description": "Invalid credentials or phone not verified"
+          },
+          "403": {
+            "description": "Account is deactivated"
+          }
+        },
+        "summary": "Login with phone and password",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/auth/verify-otp": {
+      "post": {
+        "operationId": "AuthController_verifyOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Phone verified successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyOtpResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or expired OTP"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Verify phone number with OTP",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/auth/resend-otp": {
+      "post": {
+        "operationId": "AuthController_resendOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResendOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP resent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OtpResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Phone already verified"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Resend OTP for verification",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "operationId": "AuthController_refreshToken",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token refreshed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "401": {
+            "description": "Invalid or expired refresh token"
+          }
+        },
+        "summary": "Refresh access token",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "operationId": "AuthController_logout",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logged out successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "401": {
+            "description": "Authentication required"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Logout user",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/auth/forgot-password": {
+      "post": {
+        "operationId": "AuthController_forgotPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ForgotPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OtpResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Request password reset OTP",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/auth/reset-password": {
+      "post": {
+        "operationId": "AuthController_resetPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid or expired OTP"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Reset password with OTP",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "operationId": "AuthController_getProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get current user profile",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/api/v1/users/me": {
+      "get": {
+        "operationId": "UsersController_getProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get current user profile",
+        "tags": [
+          "Users"
+        ]
+      },
+      "patch": {
+        "operationId": "UsersController_updateProfile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "409": {
+            "description": "Email already in use"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update current user profile",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/v1/users/me/password": {
+      "patch": {
+        "operationId": "UsersController_changePassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password changed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "401": {
+            "description": "Authentication required or current password is incorrect"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Change password",
+        "tags": [
+          "Users"
+        ]
+      }
+    },
+    "/api/v1/admin/users": {
+      "get": {
+        "operationId": "AdminUsersController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "default": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "default": 10,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "role",
+            "required": false,
+            "in": "query",
+            "description": "Filter by role",
+            "schema": {
+              "default": "all",
+              "type": "string",
+              "enum": [
+                "USER",
+                "INSPECTOR",
+                "ADMIN",
+                "all"
+              ]
+            }
+          },
+          {
+            "name": "isPhoneVerified",
+            "required": false,
+            "in": "query",
+            "description": "Filter by phone verification status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "isActive",
+            "required": false,
+            "in": "query",
+            "description": "Filter by active status",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "phone",
+            "required": false,
+            "in": "query",
+            "description": "Search by phone number",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsersListResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query parameters"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all users (paginated)",
+        "tags": [
+          "Admin - Users"
+        ]
+      }
+    },
+    "/api/v1/admin/users/stats": {
+      "get": {
+        "operationId": "AdminUsersController_getStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserStatsResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get user statistics",
+        "tags": [
+          "Admin - Users"
+        ]
+      }
+    },
+    "/api/v1/admin/users/{id}": {
+      "get": {
+        "operationId": "AdminUsersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid UUID format"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get user by ID",
+        "tags": [
+          "Admin - Users"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminUsersController_updateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid UUID format or invalid input data"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "409": {
+            "description": "Email already in use"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update user",
+        "tags": [
+          "Admin - Users"
+        ]
+      }
+    },
+    "/api/v1/admin/users/inspector": {
+      "post": {
+        "operationId": "AdminUsersController_createInspector",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInspectorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Inspector created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "409": {
+            "description": "Phone or email already registered"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new inspector",
+        "tags": [
+          "Admin - Users"
+        ]
+      }
+    },
+    "/api/v1/admin/users/{id}/deactivate": {
+      "patch": {
+        "operationId": "AdminUsersController_deactivateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deactivated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid UUID format"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Deactivate user",
+        "tags": [
+          "Admin - Users"
+        ]
+      }
+    },
+    "/api/v1/admin/users/{id}/activate": {
+      "patch": {
+        "operationId": "AdminUsersController_activateUser",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User activated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid UUID format"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Activate user",
+        "tags": [
+          "Admin - Users"
+        ]
+      }
+    },
+    "/api/v1/admin/inspectors": {
+      "get": {
+        "operationId": "AdminInspectorsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "search",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of inspectors with their inspection statistics"
+          },
+          "400": {
+            "description": "Invalid query parameters"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List all inspectors with performance stats",
+        "tags": [
+          "Admin - Inspectors"
+        ]
+      }
+    },
+    "/api/v1/admin/inspectors/stats": {
+      "get": {
+        "operationId": "AdminInspectorsController_getStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Dashboard-level statistics for inspectors"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get inspector dashboard statistics",
+        "tags": [
+          "Admin - Inspectors"
+        ]
+      }
+    },
+    "/api/v1/admin/inspectors/{id}/appointments": {
+      "get": {
+        "operationId": "AdminInspectorsController_getAppointments",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of appointments assigned to the inspector",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InspectorAppointmentsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid UUID format"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "Inspector not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all appointments for an inspector",
+        "tags": [
+          "Admin - Inspectors"
+        ]
+      }
+    },
+    "/api/v1/admin/inspectors/{id}": {
+      "get": {
+        "operationId": "AdminInspectorsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inspector details with performance statistics"
+          },
+          "400": {
+            "description": "Invalid UUID format"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "Inspector not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get inspector by ID with stats",
+        "tags": [
+          "Admin - Inspectors"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminInspectorsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateInspectorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated inspector details with performance statistics"
+          },
+          "400": {
+            "description": "Invalid UUID format or request body"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "Inspector not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update inspector profile data",
+        "tags": [
+          "Admin - Inspectors"
+        ]
+      }
+    },
+    "/api/v1/admin/auth/login": {
+      "post": {
+        "operationId": "AdminAuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminLoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "403": {
+            "description": "Admin account is inactive"
+          }
+        },
+        "summary": "Admin login",
+        "tags": [
+          "Admin - Auth"
+        ]
+      }
+    },
+    "/api/v1/admin/auth/refresh": {
+      "post": {
+        "operationId": "AdminAuthController_refreshToken",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminRefreshTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token refreshed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "401": {
+            "description": "Invalid refresh token"
+          }
+        },
+        "summary": "Refresh admin access token",
+        "tags": [
+          "Admin - Auth"
+        ]
+      }
+    },
+    "/api/v1/admin/auth/logout": {
+      "post": {
+        "operationId": "AdminAuthController_logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Logged out successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessageResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Admin logout",
+        "tags": [
+          "Admin - Auth"
+        ]
+      }
+    },
+    "/api/v1/admin/auth/me": {
+      "get": {
+        "operationId": "AdminAuthController_getProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Admin profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminUserResponseDto"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "403": {
+            "description": "Admin access required"
+          },
+          "404": {
+            "description": "Admin not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get current admin profile",
+        "tags": [
+          "Admin - Auth"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/sections": {
+      "post": {
+        "operationId": "AdminSectionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Section created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new draft section",
+        "tags": [
+          "Admin - Inspection Sections"
+        ]
+      },
+      "get": {
+        "operationId": "AdminSectionController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of sections"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all draft sections with question counts",
+        "tags": [
+          "Admin - Inspection Sections"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/sections/{id}": {
+      "get": {
+        "operationId": "AdminSectionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Section details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get section with questions",
+        "tags": [
+          "Admin - Inspection Sections"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminSectionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Section updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update draft section",
+        "tags": [
+          "Admin - Inspection Sections"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminSectionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Section deactivated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Soft delete section",
+        "tags": [
+          "Admin - Inspection Sections"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/sections/{id}/options": {
+      "post": {
+        "operationId": "AdminSectionController_updateOptions",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSectionOptionsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Options updated for all questions"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update options for ALL questions in a section",
+        "tags": [
+          "Admin - Inspection Sections"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/sections/reorder": {
+      "post": {
+        "operationId": "AdminSectionController_reorder",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sections reordered"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder sections",
+        "tags": [
+          "Admin - Inspection Sections"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/questions": {
+      "post": {
+        "operationId": "AdminQuestionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateQuestionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Question created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new draft question",
+        "tags": [
+          "Admin - Inspection Questions"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/sections/{sectionId}/questions": {
+      "get": {
+        "operationId": "AdminQuestionController_findAll",
+        "parameters": [
+          {
+            "name": "sectionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of questions"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get questions for a section",
+        "tags": [
+          "Admin - Inspection Questions"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/questions/{id}": {
+      "get": {
+        "operationId": "AdminQuestionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Question details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get question details",
+        "tags": [
+          "Admin - Inspection Questions"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminQuestionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateQuestionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Question updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update draft question",
+        "tags": [
+          "Admin - Inspection Questions"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminQuestionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Question deactivated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Soft delete question",
+        "tags": [
+          "Admin - Inspection Questions"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/questions/reorder": {
+      "post": {
+        "operationId": "AdminQuestionController_reorder",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderQuestionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Questions reordered"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder questions in section",
+        "tags": [
+          "Admin - Inspection Questions"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/versions/publish": {
+      "post": {
+        "operationId": "AdminVersionController_publish",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PublishVersionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Version published"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Publish drafts as new version",
+        "tags": [
+          "Admin - Inspection Versions"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/versions": {
+      "get": {
+        "operationId": "AdminVersionController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of versions"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all versions",
+        "tags": [
+          "Admin - Inspection Versions"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/versions/active": {
+      "get": {
+        "operationId": "AdminVersionController_findActive",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Active version with sections and questions"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get active version with full tree",
+        "tags": [
+          "Admin - Inspection Versions"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/versions/{id}": {
+      "get": {
+        "operationId": "AdminVersionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Version details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get version by ID with sections and questions",
+        "tags": [
+          "Admin - Inspection Versions"
+        ]
+      }
+    },
+    "/api/v1/admin/inspection/versions/{id}/activate": {
+      "patch": {
+        "operationId": "AdminVersionController_activate",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Version activated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Set version as active",
+        "tags": [
+          "Admin - Inspection Versions"
+        ]
+      }
+    },
+    "/api/v1/inspection/version/active": {
+      "get": {
+        "operationId": "InspectionController_getActiveVersion",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Active version with sections and questions"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get active inspection version with all questions",
+        "tags": [
+          "Inspection"
+        ]
+      }
+    },
+    "/api/v1/inspection/version/{id}": {
+      "get": {
+        "operationId": "InspectionController_getVersion",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Version details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get specific version by ID",
+        "tags": [
+          "Inspection"
+        ]
+      }
+    },
+    "/api/v1/inspection/reports": {
+      "post": {
+        "operationId": "InspectionController_createReport",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Report created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Start new inspection report",
+        "tags": [
+          "Inspection"
+        ]
+      }
+    },
+    "/api/v1/inspection/reports/{id}": {
+      "get": {
+        "operationId": "InspectionController_getReport",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report with responses"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get inspection report details",
+        "tags": [
+          "Inspection"
+        ]
+      }
+    },
+    "/api/v1/inspection/reports/{id}/responses": {
+      "post": {
+        "operationId": "InspectionController_submitResponse",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Response submitted"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Submit question response",
+        "tags": [
+          "Inspection"
+        ]
+      }
+    },
+    "/api/v1/inspection/reports/{id}/complete": {
+      "post": {
+        "operationId": "InspectionController_completeReport",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report completed"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Complete inspection report",
+        "tags": [
+          "Inspection"
+        ]
+      }
+    },
+    "/api/v1/inspection/reports/{id}/photos": {
+      "post": {
+        "operationId": "InspectionController_uploadPhoto",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "sectionId": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "questionId": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "description": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Photo uploaded"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Upload photo to inspection report",
+        "tags": [
+          "Inspection"
+        ]
+      }
+    },
+    "/api/v1/inspection/reports/{reportId}/photos/{photoId}": {
+      "delete": {
+        "operationId": "InspectionController_deletePhoto",
+        "parameters": [
+          {
+            "name": "reportId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "photoId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Photo deleted"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete photo from inspection report",
+        "tags": [
+          "Inspection"
+        ]
+      }
+    },
+    "/api/v1/upload": {
+      "post": {
+        "operationId": "UploadController_uploadFile",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "icon",
+                      "car-image",
+                      "car-video",
+                      "inspection-photo"
+                    ],
+                    "description": "Type of file being uploaded"
+                  }
+                },
+                "required": [
+                  "file"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "File uploaded successfully"
+          },
+          "400": {
+            "description": "Invalid file or missing file"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Upload a file with type specification",
+        "tags": [
+          "Upload"
+        ]
+      }
+    },
+    "/api/v1/listing-requests": {
+      "post": {
+        "operationId": "CarListingController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateListingRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Request created successfully"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create new car listing request",
+        "tags": [
+          "Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/listing-requests/my-requests": {
+      "get": {
+        "operationId": "CarListingController_findMyRequests",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of user requests"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get current user's listing requests",
+        "tags": [
+          "Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/listing-requests/{id}": {
+      "get": {
+        "operationId": "CarListingController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get listing request details",
+        "tags": [
+          "Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/listing-requests/{id}/cancel": {
+      "post": {
+        "operationId": "CarListingController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request cancelled"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cancel listing request",
+        "tags": [
+          "Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/admin/listing-requests": {
+      "get": {
+        "operationId": "AdminCarListingController_findAll",
+        "parameters": [
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Filter by status",
+            "schema": {
+              "enum": [
+                "PENDING",
+                "ASSIGNED",
+                "IN_INSPECTION",
+                "INSPECTED",
+                "APPROVED",
+                "REJECTED",
+                "CANCELLED"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromDate",
+            "required": false,
+            "in": "query",
+            "description": "Filter from date",
+            "schema": {
+              "example": "2024-01-01",
+              "type": "string"
+            }
+          },
+          {
+            "name": "toDate",
+            "required": false,
+            "in": "query",
+            "description": "Filter to date",
+            "schema": {
+              "example": "2024-01-31",
+              "type": "string"
+            }
+          },
+          {
+            "name": "inspectorId",
+            "required": false,
+            "in": "query",
+            "description": "Filter by inspector",
+            "schema": {
+              "example": "uuid-inspector-id",
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "description": "Filter by user who created the request",
+            "schema": {
+              "example": "uuid-user-id",
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Search by phone prefix",
+            "schema": {
+              "example": "05",
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "default": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Items per page",
+            "schema": {
+              "default": 20,
+              "example": 20,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Paginated list of requests"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List all listing requests with filters",
+        "tags": [
+          "Admin - Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/admin/listing-requests/stats": {
+      "get": {
+        "operationId": "AdminCarListingController_getStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Statistics breakdown"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get listing requests statistics",
+        "tags": [
+          "Admin - Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/admin/listing-requests/appointments": {
+      "post": {
+        "operationId": "AdminCarListingController_createAppointment",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAppointmentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Appointment created successfully"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new appointment with inspector assigned",
+        "tags": [
+          "Admin - Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/admin/listing-requests/{id}": {
+      "get": {
+        "operationId": "AdminCarListingController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get listing request details",
+        "tags": [
+          "Admin - Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/admin/listing-requests/{id}/assign": {
+      "post": {
+        "operationId": "AdminCarListingController_assignInspector",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignInspectorDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inspector assigned"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Assign inspector to request",
+        "tags": [
+          "Admin - Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/admin/listing-requests/{id}/approve": {
+      "post": {
+        "operationId": "AdminCarListingController_approve",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request approved, car created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Approve listing request and create car listing",
+        "tags": [
+          "Admin - Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/admin/listing-requests/{id}/reject": {
+      "post": {
+        "operationId": "AdminCarListingController_reject",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request rejected"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reject listing request",
+        "tags": [
+          "Admin - Listing Requests"
+        ]
+      }
+    },
+    "/api/v1/inspector/assignments": {
+      "get": {
+        "operationId": "InspectorController_findAssigned",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of assigned requests"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get inspector's assigned and in-progress requests",
+        "tags": [
+          "Inspector - Assignments"
+        ]
+      }
+    },
+    "/api/v1/inspector/assignments/history": {
+      "get": {
+        "operationId": "InspectorController_findHistory",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of completed assignments"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get inspector's completed assignment history",
+        "tags": [
+          "Inspector - Assignments"
+        ]
+      }
+    },
+    "/api/v1/inspector/assignments/{id}": {
+      "get": {
+        "operationId": "InspectorController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Assignment details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get assignment details",
+        "tags": [
+          "Inspector - Assignments"
+        ]
+      }
+    },
+    "/api/v1/inspector/assignments/{id}/start": {
+      "post": {
+        "operationId": "InspectorController_startInspection",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inspection started, report created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Start inspection for assigned request",
+        "tags": [
+          "Inspector - Assignments"
+        ]
+      }
+    },
+    "/api/v1/inspector/assignments/{id}/complete": {
+      "post": {
+        "operationId": "InspectorController_completeInspection",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inspection completed"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Complete inspection for request",
+        "tags": [
+          "Inspector - Assignments"
+        ]
+      }
+    },
+    "/api/v1/cars": {
+      "get": {
+        "operationId": "CarsController_getAvailableCars",
+        "parameters": [
+          {
+            "name": "brand",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "model",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "condition",
+            "required": false,
+            "in": "query",
+            "description": "new or used",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minPrice",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxPrice",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minYear",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxYear",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "minMileage",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "maxMileage",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "transmission",
+            "required": false,
+            "in": "query",
+            "description": "manual or automatic",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of available cars"
+          }
+        },
+        "summary": "Get all available cars for customers",
+        "tags": [
+          "Cars"
+        ]
+      }
+    },
+    "/api/v1/cars/{id}": {
+      "get": {
+        "operationId": "CarsController_getCarById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car details"
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        },
+        "summary": "Get car details by ID",
+        "tags": [
+          "Cars"
+        ]
+      }
+    },
+    "/api/v1/admin/car-specs/types": {
+      "post": {
+        "operationId": "AdminSpecTypeController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSpecTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Spec type created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new spec type",
+        "tags": [
+          "Admin - Car Spec Types"
+        ]
+      },
+      "get": {
+        "operationId": "AdminSpecTypeController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of spec types"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all spec types with options",
+        "tags": [
+          "Admin - Car Spec Types"
+        ]
+      }
+    },
+    "/api/v1/admin/car-specs/types/{id}": {
+      "get": {
+        "operationId": "AdminSpecTypeController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spec type details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get spec type with options",
+        "tags": [
+          "Admin - Car Spec Types"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminSpecTypeController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSpecTypeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Spec type updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update spec type",
+        "tags": [
+          "Admin - Car Spec Types"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminSpecTypeController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spec type deactivated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Soft delete spec type",
+        "tags": [
+          "Admin - Car Spec Types"
+        ]
+      }
+    },
+    "/api/v1/admin/car-specs/types/reorder": {
+      "post": {
+        "operationId": "AdminSpecTypeController_reorder",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderSpecTypesDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Spec types reordered"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder spec types",
+        "tags": [
+          "Admin - Car Spec Types"
+        ]
+      }
+    },
+    "/api/v1/admin/car-specs/types/{typeId}/options": {
+      "post": {
+        "operationId": "AdminSpecOptionController_create",
+        "parameters": [
+          {
+            "name": "typeId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSpecOptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Spec option created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new spec option",
+        "tags": [
+          "Admin - Car Spec Options"
+        ]
+      },
+      "get": {
+        "operationId": "AdminSpecOptionController_findAll",
+        "parameters": [
+          {
+            "name": "typeId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of options"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all options for a spec type",
+        "tags": [
+          "Admin - Car Spec Options"
+        ]
+      }
+    },
+    "/api/v1/admin/car-specs/types/{typeId}/options/{id}": {
+      "patch": {
+        "operationId": "AdminSpecOptionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSpecOptionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Spec option updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update spec option",
+        "tags": [
+          "Admin - Car Spec Options"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminSpecOptionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Spec option deactivated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Soft delete spec option",
+        "tags": [
+          "Admin - Car Spec Options"
+        ]
+      }
+    },
+    "/api/v1/admin/car-specs/types/{typeId}/options/reorder": {
+      "post": {
+        "operationId": "AdminSpecOptionController_reorder",
+        "parameters": [
+          {
+            "name": "typeId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderSpecOptionsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Options reordered"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder options in spec type",
+        "tags": [
+          "Admin - Car Spec Options"
+        ]
+      }
+    },
+    "/api/v1/car-specs": {
+      "get": {
+        "operationId": "PublicSpecController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of spec types with options"
+          }
+        },
+        "summary": "Get all active spec types with their options",
+        "tags": [
+          "Car Specs"
+        ]
+      }
+    },
+    "/api/v1/admin/car-features/sections": {
+      "post": {
+        "operationId": "AdminFeatureSectionController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFeatureSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Feature section created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new feature section",
+        "tags": [
+          "Admin - Car Feature Sections"
+        ]
+      },
+      "get": {
+        "operationId": "AdminFeatureSectionController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of feature sections"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all feature sections with items",
+        "tags": [
+          "Admin - Car Feature Sections"
+        ]
+      }
+    },
+    "/api/v1/admin/car-features/sections/{id}": {
+      "get": {
+        "operationId": "AdminFeatureSectionController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Feature section details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get feature section with items",
+        "tags": [
+          "Admin - Car Feature Sections"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminFeatureSectionController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFeatureSectionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Feature section updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update feature section",
+        "tags": [
+          "Admin - Car Feature Sections"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminFeatureSectionController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Feature section deactivated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Soft delete feature section",
+        "tags": [
+          "Admin - Car Feature Sections"
+        ]
+      }
+    },
+    "/api/v1/admin/car-features/sections/reorder": {
+      "post": {
+        "operationId": "AdminFeatureSectionController_reorder",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderFeatureSectionsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Feature sections reordered"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder feature sections",
+        "tags": [
+          "Admin - Car Feature Sections"
+        ]
+      }
+    },
+    "/api/v1/admin/car-features/sections/{sectionId}/items": {
+      "post": {
+        "operationId": "AdminFeatureItemController_create",
+        "parameters": [
+          {
+            "name": "sectionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateFeatureItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Feature item created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new feature item",
+        "tags": [
+          "Admin - Car Feature Items"
+        ]
+      },
+      "get": {
+        "operationId": "AdminFeatureItemController_findAll",
+        "parameters": [
+          {
+            "name": "sectionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of items"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all items for a feature section",
+        "tags": [
+          "Admin - Car Feature Items"
+        ]
+      }
+    },
+    "/api/v1/admin/car-features/sections/{sectionId}/items/{id}": {
+      "patch": {
+        "operationId": "AdminFeatureItemController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateFeatureItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Feature item updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update feature item",
+        "tags": [
+          "Admin - Car Feature Items"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminFeatureItemController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Feature item deactivated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Soft delete feature item",
+        "tags": [
+          "Admin - Car Feature Items"
+        ]
+      }
+    },
+    "/api/v1/admin/car-features/sections/{sectionId}/items/reorder": {
+      "post": {
+        "operationId": "AdminFeatureItemController_reorder",
+        "parameters": [
+          {
+            "name": "sectionId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderFeatureItemsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Items reordered"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder items in feature section",
+        "tags": [
+          "Admin - Car Feature Items"
+        ]
+      }
+    },
+    "/api/v1/car-features": {
+      "get": {
+        "operationId": "PublicFeatureController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of feature sections with items"
+          }
+        },
+        "summary": "Get all active feature sections with their items",
+        "tags": [
+          "Car Features"
+        ]
+      }
+    },
+    "/api/v1/admin/cars": {
+      "post": {
+        "operationId": "AdminCarsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCarDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Car created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new car listing",
+        "tags": [
+          "Admin - Cars"
+        ]
+      },
+      "get": {
+        "operationId": "AdminCarsController_findAll",
+        "parameters": [
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "DRAFT",
+                "PUBLISHED",
+                "SOLD"
+              ]
+            }
+          },
+          {
+            "name": "brand",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "Toyota",
+              "type": "string"
+            }
+          },
+          {
+            "name": "model",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": "Camry",
+              "type": "string"
+            }
+          },
+          {
+            "name": "minPrice",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 100000,
+              "type": "number"
+            }
+          },
+          {
+            "name": "maxPrice",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 500000,
+              "type": "number"
+            }
+          },
+          {
+            "name": "minYear",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 2020,
+              "type": "number"
+            }
+          },
+          {
+            "name": "maxYear",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 2024,
+              "type": "number"
+            }
+          },
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "description": "Filter by owner user ID",
+            "schema": {
+              "example": "12345678-89ab-0def-1234-56789abcdef0",
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "example": 10,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of cars"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all cars with filters",
+        "tags": [
+          "Admin - Cars"
+        ]
+      }
+    },
+    "/api/v1/admin/cars/inspections": {
+      "get": {
+        "operationId": "AdminCarsController_getAvailableInspections",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of inspected listings"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get available inspections to import",
+        "tags": [
+          "Admin - Cars"
+        ]
+      }
+    },
+    "/api/v1/admin/cars/inspections/{id}/details": {
+      "get": {
+        "operationId": "AdminCarsController_getInspectionDetails",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Inspection details with photos"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get full inspection details for import",
+        "tags": [
+          "Admin - Cars"
+        ]
+      }
+    },
+    "/api/v1/admin/cars/{id}": {
+      "get": {
+        "operationId": "AdminCarsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get car details",
+        "tags": [
+          "Admin - Cars"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminCarsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCarDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Car updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update car listing",
+        "tags": [
+          "Admin - Cars"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminCarsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car deleted"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete car listing",
+        "tags": [
+          "Admin - Cars"
+        ]
+      }
+    },
+    "/api/v1/admin/cars/{id}/status": {
+      "patch": {
+        "operationId": "AdminCarsController_updateStatus",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCarStatusDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Car status updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update car status",
+        "tags": [
+          "Admin - Cars"
+        ]
+      }
+    },
+    "/api/v1/admin/car-brands": {
+      "post": {
+        "operationId": "AdminCarBrandsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCarBrandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Brand created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new car brand",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      },
+      "get": {
+        "operationId": "AdminCarBrandsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of brands"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all car brands with models",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      }
+    },
+    "/api/v1/admin/car-brands/{id}": {
+      "get": {
+        "operationId": "AdminCarBrandsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Brand details"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get car brand with models",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminCarBrandsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCarBrandDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Brand updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update car brand",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminCarBrandsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Brand deactivated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Soft delete car brand",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      }
+    },
+    "/api/v1/admin/car-brands/reorder": {
+      "post": {
+        "operationId": "AdminCarBrandsController_reorder",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderBrandsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Brands reordered"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder car brands",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      }
+    },
+    "/api/v1/admin/car-brands/{brandId}/models": {
+      "post": {
+        "operationId": "AdminCarBrandsController_createModel",
+        "parameters": [
+          {
+            "name": "brandId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCarBrandModelDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Model created"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new model for brand",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      },
+      "get": {
+        "operationId": "AdminCarBrandsController_findModels",
+        "parameters": [
+          {
+            "name": "brandId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of models"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all models for brand",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      }
+    },
+    "/api/v1/admin/car-brands/models/{id}": {
+      "patch": {
+        "operationId": "AdminCarBrandsController_updateModel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCarBrandModelDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Model updated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update car model",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      },
+      "delete": {
+        "operationId": "AdminCarBrandsController_removeModel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Model deactivated"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Soft delete car model",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      }
+    },
+    "/api/v1/admin/car-brands/{brandId}/models/reorder": {
+      "post": {
+        "operationId": "AdminCarBrandsController_reorderModels",
+        "parameters": [
+          {
+            "name": "brandId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReorderModelsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Models reordered"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Reorder models in brand",
+        "tags": [
+          "Admin - Car Brands"
+        ]
+      }
+    },
+    "/api/v1/car-brands": {
+      "get": {
+        "operationId": "PublicCarBrandsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of brands with models"
+          }
+        },
+        "summary": "Get all active car brands with models",
+        "tags": [
+          "Car Brands"
+        ]
+      }
+    },
+    "/api/v1/car-brands/{id}/models": {
+      "get": {
+        "operationId": "PublicCarBrandsController_findModels",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of models"
+          }
+        },
+        "summary": "Get all models for a brand",
+        "tags": [
+          "Car Brands"
+        ]
+      }
+    },
+    "/api/v1/negotiations": {
+      "post": {
+        "operationId": "NegotiationsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNegotiationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Negotiation created successfully"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a new negotiation (buyer initiates)",
+        "tags": [
+          "Negotiations"
+        ]
+      },
+      "get": {
+        "operationId": "NegotiationsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "path",
+            "description": "Page number",
+            "schema": {
+              "default": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "path",
+            "description": "Number of items per page",
+            "schema": {
+              "default": 10,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "path",
+            "description": "Filter by status",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "PENDING",
+                "CONNECTED",
+                "COMPLETED",
+                "CANCELLED"
+              ]
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "path",
+            "description": "Search by car details or buyer name",
+            "schema": {
+              "example": "Toyota",
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "required": false,
+            "in": "path",
+            "description": "Filter by buyer user ID",
+            "schema": {
+              "example": "12345678-89ab-0def-1234-56789abcdef0",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of negotiations"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get current user's negotiations",
+        "tags": [
+          "Negotiations"
+        ]
+      }
+    },
+    "/api/v1/negotiations/{id}": {
+      "get": {
+        "operationId": "NegotiationsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Negotiation details"
+          },
+          "404": {
+            "description": "Negotiation not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get negotiation details",
+        "tags": [
+          "Negotiations"
+        ]
+      }
+    },
+    "/api/v1/negotiations/{id}/cancel": {
+      "post": {
+        "operationId": "NegotiationsController_cancel",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Negotiation cancelled"
+          },
+          "400": {
+            "description": "Cannot cancel"
+          },
+          "404": {
+            "description": "Negotiation not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cancel a negotiation",
+        "tags": [
+          "Negotiations"
+        ]
+      }
+    },
+    "/api/v1/admin/negotiations": {
+      "get": {
+        "operationId": "AdminNegotiationsController_findAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "default": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "default": 10,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "Filter by status",
+            "schema": {
+              "enum": [
+                "PENDING",
+                "CONNECTED",
+                "COMPLETED",
+                "CANCELLED"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "description": "Search by car details or buyer name",
+            "schema": {
+              "example": "Toyota",
+              "type": "string"
+            }
+          },
+          {
+            "name": "userId",
+            "required": false,
+            "in": "query",
+            "description": "Filter by buyer user ID",
+            "schema": {
+              "example": "12345678-89ab-0def-1234-56789abcdef0",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of all negotiations"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all negotiations (admin)",
+        "tags": [
+          "Admin - Negotiations"
+        ]
+      }
+    },
+    "/api/v1/admin/negotiations/stats": {
+      "get": {
+        "operationId": "AdminNegotiationsController_getStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Negotiation statistics"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get negotiation statistics",
+        "tags": [
+          "Admin - Negotiations"
+        ]
+      }
+    },
+    "/api/v1/admin/negotiations/{id}": {
+      "get": {
+        "operationId": "AdminNegotiationsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Negotiation details"
+          },
+          "404": {
+            "description": "Negotiation not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get negotiation details (admin)",
+        "tags": [
+          "Admin - Negotiations"
+        ]
+      },
+      "patch": {
+        "operationId": "AdminNegotiationsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNegotiationDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Negotiation updated"
+          },
+          "404": {
+            "description": "Negotiation not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update negotiation (admin)",
+        "tags": [
+          "Admin - Negotiations"
+        ]
+      }
+    },
+    "/api/v1/admin/negotiations/{id}/complete": {
+      "post": {
+        "operationId": "AdminNegotiationsController_complete",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Negotiation completed"
+          },
+          "400": {
+            "description": "Invalid status"
+          },
+          "404": {
+            "description": "Negotiation not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Mark negotiation as completed",
+        "tags": [
+          "Admin - Negotiations"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "ElGarage API",
+    "description": "ElGarage - Automotive Marketplace Platform API\n\nAuthentication: Phone + Password with OTP verification\nRoles: USER, INSPECTOR, ADMIN",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "User authentication endpoints"
+    },
+    {
+      "name": "Users",
+      "description": "User profile management"
+    },
+    {
+      "name": "Admin - Auth",
+      "description": "Admin authentication endpoints"
+    },
+    {
+      "name": "Admin - Users",
+      "description": "Admin user management endpoints"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "UserResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique user identifier (UUID)",
+            "example": "12345678-89ab-0def-1234-56789abcdef0"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number in international format",
+            "example": "+201234567890"
+          },
+          "firstName": {
+            "type": "object",
+            "description": "User first name",
+            "example": "Ahmed",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "object",
+            "description": "User last name",
+            "example": "Mohamed",
+            "nullable": true
+          },
+          "email": {
+            "type": "object",
+            "description": "User email address",
+            "example": "ahmed@example.com",
+            "nullable": true
+          },
+          "city": {
+            "type": "object",
+            "description": "User city of residence",
+            "example": "Cairo",
+            "nullable": true
+          },
+          "region": {
+            "type": "object",
+            "description": "User region/area",
+            "example": "Maadi",
+            "nullable": true
+          },
+          "avatar": {
+            "type": "object",
+            "description": "URL to user avatar image",
+            "example": "https://example.com/avatars/user123.jpg",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "description": "User role in the system",
+            "enum": [
+              "USER",
+              "INSPECTOR",
+              "ADMIN"
+            ],
+            "example": "USER"
+          },
+          "isPhoneVerified": {
+            "type": "boolean",
+            "description": "Whether phone number has been verified",
+            "example": true
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Whether user account is active",
+            "example": true
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Account creation timestamp (ISO 8601)",
+            "example": "2024-01-15T10:30:00.000Z",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Last update timestamp (ISO 8601)",
+            "example": "2024-02-20T14:45:30.000Z",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "phone",
+          "firstName",
+          "lastName",
+          "email",
+          "city",
+          "region",
+          "avatar",
+          "role",
+          "isPhoneVerified",
+          "isActive",
+          "createdAt",
+          "updatedAt"
+        ]
+      },
+      "OtpResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message with OTP instructions",
+            "example": "OTP sent successfully (mock: use 888888)"
+          },
+          "expiresInSeconds": {
+            "type": "number",
+            "description": "OTP expiration time in seconds",
+            "example": 300
+          }
+        },
+        "required": [
+          "message",
+          "expiresInSeconds"
+        ]
+      },
+      "RegisterResponseDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "description": "Created user data",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserResponseDto"
+              }
+            ]
+          },
+          "otp": {
+            "description": "OTP delivery information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OtpResponseDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "user",
+          "otp"
+        ]
+      },
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Phone number with country code",
+            "example": "+201234567890"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password (min 8 characters, must contain uppercase, lowercase, and number)",
+            "example": "Password123!"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name",
+            "example": "Doe"
+          }
+        },
+        "required": [
+          "phone",
+          "password"
+        ]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Phone number with country code",
+            "example": "+201234567890"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password",
+            "example": "Password123!"
+          }
+        },
+        "required": [
+          "phone",
+          "password"
+        ]
+      },
+      "AuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "JWT access token for API authentication",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3OC04OWFiLTBkZWYtMTIzNC01Njc4OWFiY2RlZjAiLCJwaG9uZSI6IisyMDEyMzQ1Njc4OTAiLCJyb2xlIjoiVVNFUiIsImlhdCI6MTcwNTMxMjMwMH0.abc123def456ghi789"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "JWT refresh token for obtaining new access tokens",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3OC04OWFiLTBkZWYtMTIzNC01Njc4OWFiY2RlZjAiLCJwaG9uZSI6IisyMDEyMzQ1Njc4OTAiLCJyb2xlIjoiVVNFUiIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzA1MzEyMzAwfQ.xyz789uvw012rst345"
+          },
+          "tokenType": {
+            "type": "string",
+            "description": "Token type for Authorization header",
+            "example": "Bearer"
+          },
+          "expiresIn": {
+            "type": "string",
+            "description": "Access token expiration time (e.g., \"15m\", \"1h\")",
+            "example": "15m"
+          }
+        },
+        "required": [
+          "accessToken",
+          "refreshToken",
+          "tokenType",
+          "expiresIn"
+        ]
+      },
+      "VerifyOtpResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message",
+            "example": "Phone verified successfully"
+          },
+          "user": {
+            "description": "Verified user data",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserResponseDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "message",
+          "user"
+        ]
+      },
+      "VerifyOtpDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Phone number with country code",
+            "example": "+201234567890"
+          },
+          "otpCode": {
+            "type": "string",
+            "description": "4-digit OTP code",
+            "example": "8888"
+          }
+        },
+        "required": [
+          "phone",
+          "otpCode"
+        ]
+      },
+      "ResendOtpDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Phone number with country code",
+            "example": "+201234567890"
+          }
+        },
+        "required": [
+          "phone"
+        ]
+      },
+      "RefreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        },
+        "required": [
+          "refreshToken"
+        ]
+      },
+      "MessageResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message",
+            "example": "Operation completed successfully"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ForgotPasswordDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Phone number with country code",
+            "example": "+201234567890"
+          }
+        },
+        "required": [
+          "phone"
+        ]
+      },
+      "ResetPasswordDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Phone number with country code",
+            "example": "+201234567890"
+          },
+          "otpCode": {
+            "type": "string",
+            "description": "4-digit OTP code",
+            "example": "8888"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "New password (min 8 characters)",
+            "example": "NewPassword123!"
+          }
+        },
+        "required": [
+          "phone",
+          "otpCode",
+          "newPassword"
+        ]
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "First name",
+            "example": "John"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name",
+            "example": "Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address",
+            "example": "john@example.com"
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example": "Cairo"
+          },
+          "region": {
+            "type": "string",
+            "description": "Region",
+            "example": "Maadi"
+          },
+          "avatar": {
+            "type": "string",
+            "description": "Avatar URL",
+            "example": "https://example.com/avatar.jpg"
+          }
+        }
+      },
+      "ChangePasswordDto": {
+        "type": "object",
+        "properties": {
+          "currentPassword": {
+            "type": "string",
+            "description": "Current password",
+            "example": "OldPassword123!"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "New password (min 8 characters, must contain uppercase, lowercase, and number)",
+            "example": "NewPassword123!"
+          }
+        },
+        "required": [
+          "currentPassword",
+          "newPassword"
+        ]
+      },
+      "UsersListResponseDto": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "description": "List of users",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "a"
+              }
+            },
+            "type": "array"
+          },
+          "total": {
+            "type": "number",
+            "description": "Total number of users matching the query",
+            "example": 150
+          },
+          "page": {
+            "type": "number",
+            "description": "Current page number",
+            "example": 1
+          },
+          "limit": {
+            "type": "number",
+            "description": "Number of items per page",
+            "example": 10
+          },
+          "totalPages": {
+            "type": "number",
+            "description": "Total number of pages",
+            "example": 15
+          }
+        },
+        "required": [
+          "data",
+          "total",
+          "page",
+          "limit",
+          "totalPages"
+        ]
+      },
+      "UserStatsResponseDto": {
+        "type": "object",
+        "properties": {
+          "totalUsers": {
+            "type": "number",
+            "description": "Total number of users in the system",
+            "example": 150
+          },
+          "users": {
+            "type": "number",
+            "description": "Number of users with USER role",
+            "example": 120
+          },
+          "inspectors": {
+            "type": "number",
+            "description": "Number of users with INSPECTOR role",
+            "example": 25
+          },
+          "admins": {
+            "type": "number",
+            "description": "Number of users with ADMIN role",
+            "example": 5
+          },
+          "verifiedUsers": {
+            "type": "number",
+            "description": "Number of users with verified phone numbers",
+            "example": 140
+          },
+          "activeUsers": {
+            "type": "number",
+            "description": "Number of currently active users",
+            "example": 145
+          }
+        },
+        "required": [
+          "totalUsers",
+          "users",
+          "inspectors",
+          "admins",
+          "verifiedUsers",
+          "activeUsers"
+        ]
+      },
+      "CreateInspectorDto": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "description": "Phone number with country code",
+            "example": "+201234567890"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password (min 8 characters)",
+            "example": "Password123!"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name",
+            "example": "Ahmed"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name",
+            "example": "Mohamed"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address",
+            "example": "inspector@example.com"
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example": "Cairo"
+          },
+          "region": {
+            "type": "string",
+            "description": "Region",
+            "example": "Maadi"
+          }
+        },
+        "required": [
+          "phone",
+          "password",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "InspectorAppointmentsResponseDto": {
+        "type": "object",
+        "properties": {
+          "appointments": {
+            "description": "List of appointments",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "a"
+              }
+            },
+            "type": "array"
+          },
+          "total": {
+            "type": "number",
+            "description": "Total count of appointments",
+            "example": 25
+          }
+        },
+        "required": [
+          "appointments",
+          "total"
+        ]
+      },
+      "UpdateInspectorDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "Inspector first name",
+            "example": "Ahmed"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Inspector last name",
+            "example": "Mohamed"
+          },
+          "email": {
+            "type": "object",
+            "description": "Email address",
+            "example": "inspector@example.com",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number with country code",
+            "example": "+201234567890"
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example": "Cairo"
+          },
+          "region": {
+            "type": "string",
+            "description": "Region/area",
+            "example": "Maadi"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Whether inspector account is active",
+            "example": true
+          }
+        }
+      },
+      "AdminLoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Admin email address",
+            "example": "admin@elgarage.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password",
+            "example": "AdminPassword123!"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "AdminAuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "JWT access token for admin API authentication",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbi0xMjM0LTU2NzgiLCJlbWFpbCI6ImFkbWluQGVsZ2FyYWdlLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTcwNTMxMjMwMH0.admin123token456here"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "JWT refresh token for obtaining new access tokens",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbi0xMjM0LTU2NzgiLCJlbWFpbCI6ImFkbWluQGVsZ2FyYWdlLmNvbSIsInJvbGUiOiJBRE1JTiIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzA1MzEyMzAwfQ.admin789refresh012here"
+          },
+          "tokenType": {
+            "type": "string",
+            "description": "Token type for Authorization header",
+            "example": "Bearer"
+          },
+          "expiresIn": {
+            "type": "string",
+            "description": "Access token expiration time",
+            "example": "15m"
+          }
+        },
+        "required": [
+          "accessToken",
+          "refreshToken",
+          "tokenType",
+          "expiresIn"
+        ]
+      },
+      "AdminRefreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        },
+        "required": [
+          "refreshToken"
+        ]
+      },
+      "AdminUserResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique admin user identifier (UUID)",
+            "example": "admin-1234-5678-90ab-cdef12345678"
+          },
+          "email": {
+            "type": "string",
+            "description": "Admin email address",
+            "example": "admin@elgarage.com"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "Admin first name",
+            "example": "Admin"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Admin last name",
+            "example": "User"
+          },
+          "role": {
+            "type": "string",
+            "description": "Admin role in the system",
+            "enum": [
+              "SUPER_ADMIN",
+              "ADMIN"
+            ],
+            "example": "ADMIN"
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Whether admin account is active",
+            "example": true
+          },
+          "lastLoginAt": {
+            "type": "string",
+            "description": "Last login timestamp (ISO 8601)",
+            "example": "2024-01-15T10:30:00.000Z",
+            "nullable": true,
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Account creation timestamp (ISO 8601)",
+            "example": "2023-06-01T08:00:00.000Z",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "id",
+          "email",
+          "firstName",
+          "lastName",
+          "role",
+          "isActive",
+          "lastLoginAt",
+          "createdAt"
+        ]
+      },
+      "CreateSectionDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "الهيكل",
+            "description": "Section title in Arabic"
+          },
+          "icon": {
+            "type": "string",
+            "example": "structure",
+            "description": "Icon identifier"
+          },
+          "enablePhotos": {
+            "type": "boolean",
+            "example": true,
+            "description": "Enable photos for this section"
+          },
+          "enableNotes": {
+            "type": "boolean",
+            "example": true,
+            "description": "Enable notes for this section"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
+      "UpdateSectionDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "الهيكل المعدني"
+          },
+          "icon": {
+            "type": "string",
+            "example": "metal-structure"
+          },
+          "enablePhotos": {
+            "type": "boolean",
+            "example": true
+          },
+          "enableNotes": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "UpdateSectionOptionsDto": {
+        "type": "object",
+        "properties": {
+          "options": {
+            "type": "array",
+            "example": [
+              {
+                "label": "بدون خدوش",
+                "value": "no_scratches",
+                "semanticType": "GOOD"
+              },
+              {
+                "label": "خفيفة",
+                "value": "light",
+                "semanticType": "WARN"
+              },
+              {
+                "label": "واضحة",
+                "value": "visible",
+                "semanticType": "WARN"
+              },
+              {
+                "label": "عميقة",
+                "value": "deep",
+                "semanticType": "BAD"
+              }
+            ]
+          }
+        },
+        "required": [
+          "options"
+        ]
+      },
+      "ReorderSectionDto": {
+        "type": "object",
+        "properties": {
+          "sectionId": {
+            "type": "string",
+            "example": "uuid-section-id"
+          },
+          "newOrder": {
+            "type": "number",
+            "example": 1,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "sectionId",
+          "newOrder"
+        ]
+      },
+      "CreateOptionDto": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "example": "بدون خلافات"
+          },
+          "value": {
+            "type": "string",
+            "example": "no_defect"
+          },
+          "semanticType": {
+            "type": "string",
+            "enum": [
+              "GOOD",
+              "WARN",
+              "BAD"
+            ],
+            "example": "GOOD"
+          },
+          "order": {
+            "type": "number",
+            "example": 1,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "label",
+          "value"
+        ]
+      },
+      "CreateQuestionDto": {
+        "type": "object",
+        "properties": {
+          "sectionId": {
+            "type": "string",
+            "example": "uuid-section-id"
+          },
+          "questionText": {
+            "type": "string",
+            "example": "حالة الهيكل الخارجي"
+          },
+          "questionKey": {
+            "type": "string",
+            "example": "structure_external"
+          },
+          "answerType": {
+            "type": "string",
+            "enum": [
+              "OPTIONS",
+              "YES_NO",
+              "TEXT",
+              "NUMBER",
+              "PHOTO"
+            ],
+            "example": "OPTIONS"
+          },
+          "isRequired": {
+            "type": "boolean",
+            "example": true
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateOptionDto"
+            }
+          }
+        },
+        "required": [
+          "sectionId",
+          "questionText",
+          "questionKey"
+        ]
+      },
+      "UpdateQuestionDto": {
+        "type": "object",
+        "properties": {
+          "questionText": {
+            "type": "string",
+            "example": "نص السؤال المحدث"
+          },
+          "answerType": {
+            "type": "string",
+            "enum": [
+              "OPTIONS",
+              "YES_NO",
+              "TEXT",
+              "NUMBER",
+              "PHOTO"
+            ]
+          },
+          "isRequired": {
+            "type": "boolean"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateOptionDto"
+            }
+          }
+        }
+      },
+      "ReorderQuestionDto": {
+        "type": "object",
+        "properties": {
+          "sectionId": {
+            "type": "string",
+            "example": "section-uuid"
+          },
+          "questionId": {
+            "type": "string",
+            "example": "question-uuid"
+          },
+          "newOrder": {
+            "type": "number",
+            "example": 1,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "sectionId",
+          "questionId",
+          "newOrder"
+        ]
+      },
+      "PublishVersionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Initial Version"
+          },
+          "description": {
+            "type": "string",
+            "example": "First inspection version"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "CreateListingRequestDto": {
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "example": "Toyota",
+            "description": "Car brand"
+          },
+          "model": {
+            "type": "string",
+            "example": "Camry",
+            "description": "Car model"
+          },
+          "year": {
+            "type": "number",
+            "example": 2020,
+            "description": "Car year"
+          },
+          "mileage": {
+            "type": "number",
+            "example": 50000,
+            "description": "Car mileage in kilometers"
+          },
+          "latitude": {
+            "type": "number",
+            "example": 24.7136,
+            "description": "Latitude coordinate"
+          },
+          "longitude": {
+            "type": "number",
+            "example": 46.6753,
+            "description": "Longitude coordinate"
+          },
+          "address": {
+            "type": "string",
+            "example": "Riyadh, Saudi Arabia",
+            "description": "Address string"
+          },
+          "scheduledDate": {
+            "type": "string",
+            "example": "2024-01-15",
+            "description": "Scheduled inspection date"
+          },
+          "scheduledTime": {
+            "type": "string",
+            "example": "10:00-12:00",
+            "description": "Scheduled time slot"
+          }
+        },
+        "required": [
+          "brand",
+          "model",
+          "year",
+          "mileage",
+          "latitude",
+          "longitude",
+          "address",
+          "scheduledDate",
+          "scheduledTime"
+        ]
+      },
+      "CreateAppointmentDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "example": "uuid-client-id",
+            "description": "Client user ID"
+          },
+          "assignedInspectorId": {
+            "type": "string",
+            "example": "uuid-inspector-id",
+            "description": "Inspector user ID"
+          },
+          "brand": {
+            "type": "string",
+            "example": "Toyota",
+            "description": "Car brand"
+          },
+          "model": {
+            "type": "string",
+            "example": "Camry",
+            "description": "Car model"
+          },
+          "year": {
+            "type": "number",
+            "example": 2020,
+            "description": "Car year"
+          },
+          "mileage": {
+            "type": "number",
+            "example": 50000,
+            "description": "Car mileage in kilometers"
+          },
+          "address": {
+            "type": "string",
+            "example": "Riyadh, Saudi Arabia",
+            "description": "Address string"
+          },
+          "latitude": {
+            "type": "number",
+            "example": 24.7136,
+            "description": "Latitude coordinate"
+          },
+          "longitude": {
+            "type": "number",
+            "example": 46.6753,
+            "description": "Longitude coordinate"
+          },
+          "scheduledDate": {
+            "type": "string",
+            "example": "2024-01-15",
+            "description": "Scheduled inspection date (YYYY-MM-DD)"
+          },
+          "scheduledTime": {
+            "type": "string",
+            "example": "10:00-12:00",
+            "description": "Scheduled time slot"
+          }
+        },
+        "required": [
+          "userId",
+          "assignedInspectorId",
+          "brand",
+          "model",
+          "year",
+          "mileage",
+          "address",
+          "latitude",
+          "longitude",
+          "scheduledDate",
+          "scheduledTime"
+        ]
+      },
+      "AssignInspectorDto": {
+        "type": "object",
+        "properties": {
+          "inspectorId": {
+            "type": "string",
+            "example": "uuid-inspector-id",
+            "description": "Inspector user ID"
+          }
+        },
+        "required": [
+          "inspectorId"
+        ]
+      },
+      "RejectRequestDto": {
+        "type": "object",
+        "properties": {
+          "reason": {
+            "type": "string",
+            "example": "Car condition does not meet requirements",
+            "description": "Rejection reason"
+          }
+        },
+        "required": [
+          "reason"
+        ]
+      },
+      "CreateSpecTypeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "الحالة"
+          },
+          "key": {
+            "type": "string",
+            "example": "status"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "name",
+          "key"
+        ]
+      },
+      "UpdateSpecTypeDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "الحالة"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ReorderSpecTypesDto": {
+        "type": "object",
+        "properties": {
+          "typeIds": {
+            "example": [
+              "uuid-1",
+              "uuid-2",
+              "uuid-3"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "typeIds"
+        ]
+      },
+      "CreateSpecOptionDto": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "example": "جديدة"
+          },
+          "value": {
+            "type": "string",
+            "example": "new"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "label",
+          "value"
+        ]
+      },
+      "UpdateSpecOptionDto": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string",
+            "example": "جديدة"
+          },
+          "value": {
+            "type": "string",
+            "example": "new"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ReorderSpecOptionsDto": {
+        "type": "object",
+        "properties": {
+          "optionIds": {
+            "example": [
+              "uuid-1",
+              "uuid-2",
+              "uuid-3"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "optionIds"
+        ]
+      },
+      "CreateFeatureSectionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "مميزات تسهيل القيادة"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateFeatureSectionDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "مميزات تسهيل القيادة"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ReorderFeatureSectionsDto": {
+        "type": "object",
+        "properties": {
+          "sectionIds": {
+            "example": [
+              "uuid-1",
+              "uuid-2",
+              "uuid-3"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "sectionIds"
+        ]
+      },
+      "CreateFeatureItemDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "شاشة عرض"
+          },
+          "iconUrl": {
+            "type": "string",
+            "example": "https://example.com/icons/screen.svg"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "name",
+          "iconUrl"
+        ]
+      },
+      "UpdateFeatureItemDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "شاشة عرض"
+          },
+          "iconUrl": {
+            "type": "string",
+            "example": "https://example.com/icons/screen.svg"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ReorderFeatureItemsDto": {
+        "type": "object",
+        "properties": {
+          "itemIds": {
+            "example": [
+              "uuid-1",
+              "uuid-2",
+              "uuid-3"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "itemIds"
+        ]
+      },
+      "CreateCarSpecificationDto": {
+        "type": "object",
+        "properties": {
+          "specKeyId": {
+            "type": "string",
+            "example": "spec-type-uuid"
+          },
+          "optionId": {
+            "type": "string",
+            "example": "spec-option-uuid"
+          }
+        },
+        "required": [
+          "specKeyId",
+          "optionId"
+        ]
+      },
+      "CreateCarDto": {
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "example": "Toyota"
+          },
+          "model": {
+            "type": "string",
+            "example": "Camry"
+          },
+          "brandId": {
+            "type": "string",
+            "example": "brand-uuid"
+          },
+          "modelId": {
+            "type": "string",
+            "example": "model-uuid"
+          },
+          "year": {
+            "type": "number",
+            "example": 2023
+          },
+          "mileage": {
+            "type": "number",
+            "example": 5000
+          },
+          "trim": {
+            "type": "string",
+            "example": "SE"
+          },
+          "latitude": {
+            "type": "number",
+            "example": 30.0444
+          },
+          "longitude": {
+            "type": "number",
+            "example": 31.2357
+          },
+          "address": {
+            "type": "string",
+            "example": "Cairo, Egypt"
+          },
+          "price": {
+            "type": "number",
+            "example": 250000
+          },
+          "installmentMonths": {
+            "type": "number",
+            "example": 12
+          },
+          "images": {
+            "example": [
+              "image1.jpg",
+              "image2.jpg"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "videoUrl": {
+            "type": "string",
+            "example": "https://example.com/video.mp4"
+          },
+          "description": {
+            "type": "string",
+            "example": "Car description..."
+          },
+          "listingRequestId": {
+            "type": "string",
+            "example": "inspection-report-uuid"
+          },
+          "specifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateCarSpecificationDto"
+            }
+          },
+          "featureIds": {
+            "example": [
+              "feature-item-uuid-1",
+              "feature-item-uuid-2"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "brand",
+          "model",
+          "year",
+          "mileage",
+          "price",
+          "images",
+          "specifications",
+          "featureIds"
+        ]
+      },
+      "UpdateCarDto": {
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "example": "Toyota"
+          },
+          "model": {
+            "type": "string",
+            "example": "Camry"
+          },
+          "brandId": {
+            "type": "string",
+            "example": "brand-uuid"
+          },
+          "modelId": {
+            "type": "string",
+            "example": "model-uuid"
+          },
+          "year": {
+            "type": "number",
+            "example": 2023
+          },
+          "mileage": {
+            "type": "number",
+            "example": 5000
+          },
+          "trim": {
+            "type": "string",
+            "example": "SE"
+          },
+          "latitude": {
+            "type": "number",
+            "example": 30.0444
+          },
+          "longitude": {
+            "type": "number",
+            "example": 31.2357
+          },
+          "address": {
+            "type": "string",
+            "example": "Cairo, Egypt"
+          },
+          "price": {
+            "type": "number",
+            "example": 250000
+          },
+          "installmentMonths": {
+            "type": "number",
+            "example": 12
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "videoUrl": {
+            "type": "string",
+            "example": "https://example.com/video.mp4"
+          },
+          "description": {
+            "type": "string",
+            "example": "Car description..."
+          },
+          "specifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreateCarSpecificationDto"
+            }
+          },
+          "featureIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "UpdateCarStatusDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "DRAFT",
+              "PUBLISHED",
+              "SOLD"
+            ],
+            "example": "PUBLISHED"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "CreateCarBrandDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "تويوتا"
+          },
+          "nameEn": {
+            "type": "string",
+            "example": "Toyota"
+          },
+          "logo": {
+            "type": "string",
+            "example": "https://example.com/logo.svg"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateCarBrandDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "تويوتا"
+          },
+          "nameEn": {
+            "type": "string",
+            "example": "Toyota"
+          },
+          "logo": {
+            "type": "string",
+            "example": "https://example.com/logo.svg"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ReorderBrandsDto": {
+        "type": "object",
+        "properties": {
+          "brandIds": {
+            "example": [
+              "uuid-1",
+              "uuid-2",
+              "uuid-3"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "brandIds"
+        ]
+      },
+      "CreateCarBrandModelDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "كورولا"
+          },
+          "nameEn": {
+            "type": "string",
+            "example": "Corolla"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "UpdateCarBrandModelDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "كورولا"
+          },
+          "nameEn": {
+            "type": "string",
+            "example": "Corolla"
+          },
+          "order": {
+            "type": "number",
+            "example": 0
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ReorderModelsDto": {
+        "type": "object",
+        "properties": {
+          "modelIds": {
+            "example": [
+              "uuid-1",
+              "uuid-2",
+              "uuid-3"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "modelIds"
+        ]
+      },
+      "CreateNegotiationDto": {
+        "type": "object",
+        "properties": {
+          "carId": {
+            "type": "string",
+            "description": "Car ID to negotiate on",
+            "example": "uuid"
+          },
+          "initialOffer": {
+            "type": "number",
+            "description": "Initial offer amount",
+            "example": 45000
+          },
+          "message": {
+            "type": "string",
+            "description": "Message to admin",
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "carId",
+          "initialOffer"
+        ]
+      },
+      "UpdateNegotiationDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Negotiation status",
+            "enum": [
+              "PENDING",
+              "CONNECTED",
+              "COMPLETED",
+              "CANCELLED"
+            ],
+            "example": "CONNECTED"
+          },
+          "adminNotes": {
+            "type": "string",
+            "description": "Admin notes",
+            "maxLength": 2000
+          },
+          "finalPrice": {
+            "type": "number",
+            "description": "Final agreed price",
+            "example": 42000
+          }
+        }
+      }
+    }
+  }
+}
