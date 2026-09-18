@@ -1,0 +1,11 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="story">
+<g id="Group">
+<path id="Vector" d="M13.6834 6.625C15.7167 8.65833 15.7167 11.9583 13.6834 13.9916C11.65 16.025 8.35 16.025 6.31667 13.9916C4.28333 11.9583 4.28333 8.65833 6.31667 6.625C8.35 4.59166 11.65 4.59166 13.6834 6.625Z" stroke="var(--stroke-0, #002EC1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M6.875 18.0333C5.20833 17.3667 3.74999 16.1583 2.78333 14.4833C1.83333 12.8417 1.51666 11.0167 1.74166 9.275" stroke="var(--stroke-0, #002EC1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M4.875 3.73332C6.29167 2.62498 8.06667 1.96665 10 1.96665C11.8917 1.96665 13.6333 2.60831 15.0333 3.67498" stroke="var(--stroke-0, #002EC1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M13.125 18.0333C14.7917 17.3667 16.25 16.1583 17.2167 14.4833C18.1667 12.8417 18.4833 11.0167 18.2583 9.275" stroke="var(--stroke-0, #002EC1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path id="Vector_5" opacity="0" d="M0.749998 19.25L0.749998 0.749998L19.25 0.749998L19.25 19.25L0.749998 19.25Z" stroke="var(--stroke-0, #002EC1)" stroke-width="1.5"/>
+</g>
+</svg>
